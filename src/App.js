@@ -12,7 +12,7 @@ import './App.css';
 const App = () => {
     return (
       <div className="App">
-        <ParticlesBg  className="particles"
+        <ParticlesBg 
           num={300} type="cobweb" bg={true}
         />
         <Navigation />
