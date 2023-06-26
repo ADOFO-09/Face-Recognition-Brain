@@ -10,20 +10,19 @@ import './App.css';
 
 
 const App = () => {
-    return (
-      <div className="App">
-        <ParticlesBg 
-          num={300} type="cobweb" bg={true}
-        />
-        <Navigation />
-        <Logo/>
-        <Rank/>
-        <ImageLinkForm/> 
-        {/* 
-        <FaceRecognition/>
-        */}
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <ParticlesBg
+        num={300} type="cobweb" bg={true} />
+      <Navigation />
+      <Logo />
+      <Rank />
+      <ImageLinkForm />
+      {/*
+            <FaceRecognition/>
+            */}
+    </div>
+  );
+}
   
 export default App;
