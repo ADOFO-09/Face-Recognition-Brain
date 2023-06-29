@@ -9,7 +9,7 @@ import './App.css';
 
 
 const app = new Clarifai.App({
-  apiKey: '80ded2b2a85642bca6e77e72f0425abe'
+  apiKey: 'dc8af10eb7e34f5da10ffa571c609e9f'
  });
 
 class App extends React.Component {
@@ -25,7 +25,8 @@ class App extends React.Component {
   }
 
   onButtonSubmit = () => {
-    console.log('click')
+    console.log('click')  
+  
   }
   render() {
   return (
