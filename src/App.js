@@ -18,14 +18,16 @@ class App extends React.Component {
     super()
     this.state = {
       input:'',
+      imageUrl: ''
     }
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value)
+    this.setState({input: event.target.value})
   }
 
   onButtonSubmit = () => {
+    this.setState({imageUrl: this.state.input});
     console.log('click')  
      //help me => user_id can be found in multiple ways, one way is in https://portal.clarifai.com/settings/profile 
   const USER_ID = "dev-id";
@@ -103,7 +105,7 @@ return (
         onInputChange = {this.onInputChange} 
         onButtonSubmit = {this.onButtonSubmit}
         />
-        <FaceRecognition/>
+        <FaceRecognition imageUrl={this.state.imageUrl}/>
       </div>
   )
 };
