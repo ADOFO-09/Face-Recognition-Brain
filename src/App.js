@@ -2,6 +2,7 @@ import React from 'react';
 import Clarifai from 'clarifai';
 import ParticlesBg from 'particles-bg'
 import Navigation from './components/Navigation/Navigation';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
@@ -102,9 +103,7 @@ return (
         onInputChange = {this.onInputChange} 
         onButtonSubmit = {this.onButtonSubmit}
         />
-        {/*
-              <FaceRecognition/>
-              */}
+        <FaceRecognition/>
       </div>
   )
 };
