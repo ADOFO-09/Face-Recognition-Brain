@@ -18,9 +18,11 @@ class App extends React.Component {
     super()
     this.state = {
       input:'',
-      imageUrl: ''
+      imageUrl: '',
+      box: {},
     }
   }
+
 
   onInputChange = (event) => {
     this.setState({input: event.target.value})
@@ -45,7 +47,7 @@ class App extends React.Component {
   // Change these to whatever model and image input you want to use
   // help me => https://help.clarifai.com/hc/en-us/articles/1500007677141-Where-to-find-your-Model-IDs-and-Model-Version-IDs
   const MODEL_ID = "face-detection";
-  const MODEL_VERSION_ID = "45fb9a671625463fa646c3523a3087d5";
+  const MODEL_VERSION_ID = "6dc7e46bc9124c5c8824be4822abe105";
 
   const IMAGE_URL = this.state.input;
 
@@ -85,7 +87,7 @@ class App extends React.Component {
       "/outputs",
     requestOptions
   )
-    .then((response) => response.json())
+    .then((response) => (response.outputs[0].data.regions[0].region_info.bounding_box))
     .then((result) =>
       console.log(result)
     )
@@ -105,7 +107,10 @@ return (
         onInputChange = {this.onInputChange} 
         onButtonSubmit = {this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl={this.state.imageUrl}/>
+        <FaceRecognition 
+        imageUrl={this.state.imageUrl}
+        calculateFaceLocation = {this.calculateFaceLocation}
+        />
       </div>
   )
 };
