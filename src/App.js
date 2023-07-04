@@ -2,6 +2,7 @@ import React from 'react';
 import Clarifai from 'clarifai';
 import ParticlesBg from 'particles-bg'
 import Navigation from './components/Navigation/Navigation';
+import Signin from './components/Signin/Signin';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
@@ -92,7 +93,7 @@ class App extends React.Component {
       console.log(result)
     )
     .catch((error) => console.log("error", error));
-};
+  };
   
 
 render() {
@@ -101,6 +102,7 @@ return (
         <ParticlesBg
           num={30} type="cobweb" bg={true} />
         <Navigation />
+        <Signin />
         <Logo />
         <Rank />
         <ImageLinkForm  
