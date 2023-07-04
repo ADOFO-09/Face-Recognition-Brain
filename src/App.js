@@ -87,7 +87,7 @@ class App extends React.Component {
       "/outputs",
     requestOptions
   )
-    .then((response) => (response.outputs[0].data.regions[0].region_info.bounding_box))
+    .then((response) => (response.json()))
     .then((result) =>
       console.log(result)
     )
