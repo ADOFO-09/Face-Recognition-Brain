@@ -109,7 +109,6 @@ return (
         />
         <FaceRecognition 
         imageUrl={this.state.imageUrl}
-        calculateFaceLocation = {this.calculateFaceLocation}
         />
       </div>
   )
