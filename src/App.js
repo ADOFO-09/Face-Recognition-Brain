@@ -21,6 +21,7 @@ class App extends React.Component {
       input:'',
       imageUrl: '',
       box: {},
+      route: 'signin'
     }
   }
 
@@ -96,22 +97,29 @@ class App extends React.Component {
   };
   
 
+  onRouteChange = (route) => {
+    this.setState({route: route});
+  }
+
 render() {
 return (
      <div className="App">
         <ParticlesBg
           num={30} type="cobweb" bg={true} />
-        <Navigation />
-        <Signin />
-        <Logo />
-        <Rank />
-        <ImageLinkForm  
-        onInputChange = {this.onInputChange} 
-        onButtonSubmit = {this.onButtonSubmit}
-        />
-        <FaceRecognition 
-        imageUrl={this.state.imageUrl}
-        />
+        <Navigation onRouteChange={this.onRouteChange} />
+        { this.state.route === 'signin'
+          ?<Signin onRouteChange ={this.onRouteChange} />
+          :<div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm  
+            onInputChange = {this.onInputChange} 
+            onButtonSubmit = {this.onButtonSubmit}
+            />
+            <FaceRecognition imageUrl={this.state.imageUrl}/>
+          </div>
+          
+        }  
       </div>
   )
 };
