@@ -109,30 +109,31 @@ class App extends React.Component {
   }
 
 render() {
-return (
-     <div className="App">
-        <ParticlesBg
-          num={30} type="cobweb" bg={true} />
-        <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange} />
-        { this.state.route === 'home'
-          ?<div>
-            <Logo />
-            <Rank />
-            <ImageLinkForm  
-            onInputChange = {this.onInputChange} 
-            onButtonSubmit = {this.onButtonSubmit}
-            />
-            <FaceRecognition imageUrl={this.state.imageUrl}/>
-          </div>
-          :(
-            this.state.route === 'signin'
-            ?<Signin onRouteChange={this.onRouteChange} />
-            :<Register onRouteChange={this.onRouteChange}/>
-          )
-          
-        }  
-      </div>
-  )
+  const {isSignedIn, imageUrl, route} = this.state;
+  return (
+      <div className="App">
+          <ParticlesBg
+            num={30} type="cobweb" bg={true} />
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+          { this.state.route === 'home'
+            ?<div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm  
+              onInputChange = {this.onInputChange} 
+              onButtonSubmit = {this.onButtonSubmit}
+              />
+              <FaceRecognition imageUrl={imageUrl}/>
+            </div>
+            :(
+              route === 'signin'
+              ?<Signin onRouteChange={this.onRouteChange} />
+              :<Register onRouteChange={this.onRouteChange}/>
+            )
+            
+          }  
+        </div>
+    )
 };
   }
 

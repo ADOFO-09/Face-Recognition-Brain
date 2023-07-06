@@ -4,14 +4,14 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
   if(isSignedIn){
     return (
       <nav style={{display: 'flex', justifyContent: 'flex-end'}}>  
-      <p onClick = {() => onRouteChange('signin')} className='f3 link dim black underline pointer'>Sign Out</p>
+      <p onClick = {() => onRouteChange('signout')} className='f3 pa2 link dim black underline pointer'>Sign Out</p>
     </nav>
     ) 
   }else {
     return (
-      <nav style={{display: 'flex', justifyContent: 'flex-end'}}>  
-        <p onClick = {() => onRouteChange('signin')} className='f3 link dim black underline pointer'>Sign In</p>
-        <p onClick = {() => onRouteChange('register')} className='f3 link dim black underline pointer'>Register</p>
+      <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <p onClick = {() => onRouteChange('signin')} className='f3 pa2 link dim black underline pointer'>SignIn</p>
+        <p onClick = {() => onRouteChange('register')} className='f3 pa2 link dim black underline pointer'>Register</p>
       </nav>
     );
   } 
