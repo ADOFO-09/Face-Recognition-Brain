@@ -23,9 +23,27 @@ class App extends React.Component {
       imageUrl: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+      }
     }
   }
+
+  loaduser = (data) => {
+    this.setState({user:{ 
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      entries: data.entries,
+      joined: data.joined
+  }});
+}
+  
 // Connecting Frontend to Backend Server
   // componentDidMount(){
   //   fetch("http://localhost:3000/")
@@ -133,7 +151,7 @@ render() {
             :(
               route === 'signin'
               ?<Signin onRouteChange={this.onRouteChange} />
-              :<Register onRouteChange={this.onRouteChange}/>
+              :<Register loaduser={this.loaduser} onRouteChange={this.onRouteChange}/>
             )
             
           }  
