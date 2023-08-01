@@ -34,7 +34,7 @@ class App extends React.Component {
     }
   }
 
-  loaduser = (data) => {
+  loadUser = (data) => {
     this.setState({user:{ 
       id: data.id,
       name: data.name,
@@ -141,7 +141,7 @@ render() {
           { this.state.route === 'home'
             ?<div>
               <Logo />
-              <Rank />
+              <Rank name={this.state.user.name} entries={this.state.user.entries}/>
               <ImageLinkForm  
               onInputChange = {this.onInputChange} 
               onButtonSubmit = {this.onButtonSubmit}
@@ -150,8 +150,8 @@ render() {
             </div>
             :(
               route === 'signin'
-              ?<Signin onRouteChange={this.onRouteChange} />
-              :<Register loaduser={this.loaduser} onRouteChange={this.onRouteChange}/>
+              ?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+              :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
             
           }  
