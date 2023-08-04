@@ -58,68 +58,78 @@ class App extends React.Component {
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
     console.log('click')  
-     //help me => user_id can be found in multiple ways, one way is in https://portal.clarifai.com/settings/profile 
-  const USER_ID = "dev-id";
+      //help me => user_id can be found in multiple ways, one way is in https://portal.clarifai.com/settings/profile 
+    const USER_ID = "dev-id";
 
-  
-  // Your PAT (Personal Access Token) can be found in the portal under Authentification
-  // help me => PAT can be found in https://portal.clarifai.com/settings/authentication (create one if necessary!)
-  const PAT = "804b3b17ea1245de94df8c10382621b2"; 
-  
-  
-  // help me => App Id is just the name of your app on the portal. 
-  const APP_ID = "second-application"; 
+    
+    // Your PAT (Personal Access Token) can be found in the portal under Authentification
+    // help me => PAT can be found in https://portal.clarifai.com/settings/authentication (create one if necessary!)
+    const PAT = "804b3b17ea1245de94df8c10382621b2"; 
+    
+    
+    // help me => App Id is just the name of your app on the portal. 
+    const APP_ID = "second-application"; 
 
 
-  // Change these to whatever model and image input you want to use
-  // help me => https://help.clarifai.com/hc/en-us/articles/1500007677141-Where-to-find-your-Model-IDs-and-Model-Version-IDs
-  const MODEL_ID = "face-detection";
-  const MODEL_VERSION_ID = "6dc7e46bc9124c5c8824be4822abe105";
+    // Change these to whatever model and image input you want to use
+    // help me => https://help.clarifai.com/hc/en-us/articles/1500007677141-Where-to-find-your-Model-IDs-and-Model-Version-IDs
+    const MODEL_ID = "face-detection";
+    const MODEL_VERSION_ID = "6dc7e46bc9124c5c8824be4822abe105";
 
-  const IMAGE_URL = this.state.input;
+    const IMAGE_URL = this.state.input;
 
-  ///////////////////////////////////////////////////////////////////////////////////
-  // YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
-  ///////////////////////////////////////////////////////////////////////////////////
-  const raw = JSON.stringify({
-    user_app_id: {
-      user_id: USER_ID,
-      app_id: APP_ID,
-    },
-    inputs: [
-      {
-        data: {
-          image: {
-            url: IMAGE_URL,
+    ///////////////////////////////////////////////////////////////////////////////////
+    // YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
+    ///////////////////////////////////////////////////////////////////////////////////
+    const raw = JSON.stringify({
+      user_app_id: {
+        user_id: USER_ID,
+        app_id: APP_ID,
+      },
+      inputs: [
+        {
+          data: {
+            image: {
+              url: IMAGE_URL,
+            },
           },
         },
+      ],
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Key " + PAT,
       },
-    ],
-  });
+      body: raw,
+    };
 
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Key " + PAT,
-    },
-    body: raw,
-  };
-
-  fetch(
-    "https://api.clarifai.com/v2/models/" +
-      MODEL_ID +
-      "/versions/" +
-      MODEL_VERSION_ID +
-      "/outputs",
-    requestOptions
-  )
-    .then((response) => (response.json()))
-    .then((result) =>
-      console.log(result)
+    fetch(
+      "https://api.clarifai.com/v2/models/" +
+        MODEL_ID +
+        "/versions/" +
+        MODEL_VERSION_ID +
+        "/outputs",
+      requestOptions
     )
-    .catch((error) => console.log("error", error));
-  };
+      .then((response) => (response.json()))
+      .then((result) =>
+        console.log(result)
+      )
+      .then(response => {
+          fetch('http://localhost:3000/image',{
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                  id: this.state.user.id    
+            })
+          })
+        })   
+        .catch((error) => console.log("error", error))
+      }
+        
   
 
   onRouteChange = (route) => {
