@@ -4,16 +4,16 @@ class Signin extends React.Component {
     constructor(props){
     super(props); 
         this.state = {
-            singInEmail: '',
-            singInPassword: ''
+            signInEmail: '',
+            signInPassword: ''
         }
     }
     onEmailChange = (event) => {
-        this.setState({singInEmail: event.target.value})
+        this.setState({signInEmail: event.target.value})
     }
 
     onPasswordChange = (event) => {
-        this.setState({singInPassword: event.target.value})
+        this.setState({signInPassword: event.target.value})
     }
 
     onSubmitSignin = () => {
@@ -21,8 +21,8 @@ class Signin extends React.Component {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                email: this.state.singInEmail,
-                password: this.state.singInPassword
+                email: this.state.signInEmail,
+                password: this.state.signInPassword
             })
         })
         .then (response => response.json())

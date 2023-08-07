@@ -119,16 +119,22 @@ class App extends React.Component {
         console.log(result)
       )
       .then(response => {
+        if (response) {
           fetch('http://localhost:3000/image',{
-              method: 'put',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({
-                  id: this.state.user.id    
-            })
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: this.state.user.id    
           })
-        })   
-        .catch((error) => console.log("error", error))
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user,{entries: count})) 
+          })            
       }
+    }) 
+      .catch((error) => console.log("error", error))
+    }
         
   
 
