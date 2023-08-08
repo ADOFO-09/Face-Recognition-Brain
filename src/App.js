@@ -43,13 +43,6 @@ class App extends React.Component {
       joined: data.joined
   }});
 }
-  
-// Connecting Frontend to Backend Server
-  // componentDidMount(){
-  //   fetch("http://localhost:3000/")
-  //    .then(response => response.json())
-  //    .then(console.log)
-  //   }
 
   onInputChange = (event) => {
     this.setState({input: event.target.value})
@@ -114,27 +107,23 @@ class App extends React.Component {
         "/outputs",
       requestOptions
     )
-      .then((response) => (response.json()))
-      .then((result) =>
-        console.log(result)
-      )
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3000/image',{
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                id: this.state.user.id    
-          })
+    .then(response => {
+      if (response) {
+        fetch('http://localhost:3000/image',{
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              id: this.state.user.id    
         })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user,{entries: count})) 
-          })            
-      }
-    }) 
-      .catch((error) => console.log("error", error))
+      })
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.user,{entries: count})) 
+        })            
     }
+  }) 
+    .catch((error) => console.log("error", error))
+}
         
   
 
@@ -176,5 +165,4 @@ render() {
 };
   }
 
-             
 export default App;
