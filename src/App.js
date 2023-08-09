@@ -44,6 +44,19 @@ class App extends React.Component {
   }});
 }
 
+calculateFaceLocation = (data) => {
+  const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+  const image = document.getElementById('inputimage');
+  const width = Number(image.width);
+  const height = Number(image.height);
+  return {
+    leftCol: clarifaiFace.leftCol * width,
+    topRow: clarifaiFace.topRow * height,
+    rightCol: width - (clarifaiFace.rightCol * width),
+    bottomRow: height - (clarifaiFace.bottomRow * height)
+  }
+}
+
   onInputChange = (event) => {
     this.setState({input: event.target.value})
   }
@@ -122,6 +135,8 @@ class App extends React.Component {
         })            
     }
   }) 
+  .then(response => this.calculateFaceLocation(response))
+    .catch(err => console.log(err))
     .catch((error) => console.log("error", error))
 }
         
