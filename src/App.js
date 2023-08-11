@@ -57,6 +57,11 @@ calculateFaceLocation = (data) => {
   }
 }
 
+displayFaceBox = (box) => {
+  console.log(box)
+  this.setState({box: box})
+}
+
   onInputChange = (event) => {
     this.setState({input: event.target.value})
   }
@@ -135,7 +140,7 @@ calculateFaceLocation = (data) => {
         })            
     }
   }) 
-  .then(response => this.calculateFaceLocation(response))
+  .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
     .catch(err => console.log(err))
     .catch((error) => console.log("error", error))
 }
@@ -166,7 +171,7 @@ render() {
               onInputChange = {this.onInputChange} 
               onButtonSubmit = {this.onButtonSubmit}
               />
-              <FaceRecognition imageUrl={imageUrl}/>
+              <FaceRecognition box={this.state.box} imageUrl={imageUrl}/>
             </div>
             :(
               route === 'signin'
