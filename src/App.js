@@ -44,23 +44,23 @@ class App extends React.Component {
   }});
 }
 
-calculateFaceLocation = (data) => {
-  const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-  const image = document.getElementById('inputimage');
-  const width = Number(image.width);
-  const height = Number(image.height);
-  return {
-    leftCol: clarifaiFace.leftCol * width,
-    topRow: clarifaiFace.topRow * height,
-    rightCol: width - (clarifaiFace.rightCol * width),
-    bottomRow: height - (clarifaiFace.bottomRow * height)
-  }
-}
+// calculateFaceLocation = (data) => {
+//   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+//   const image = document.getElementById('inputimage');
+//   const width = Number(image.width);
+//   const height = Number(image.height);
+//   return {
+//     leftCol: clarifaiFace.leftCol * width,
+//     topRow: clarifaiFace.topRow * height,
+//     rightCol: width - (clarifaiFace.rightCol * width),
+//     bottomRow: height - (clarifaiFace.bottomRow * height)
+//   }
+// }
 
-displayFaceBox = (box) => {
-  console.log(box)
-  this.setState({box: box})
-}
+// displayFaceBox = (box) => {
+//   console.log(box)
+//   this.setState({box: box})
+// }
 
   onInputChange = (event) => {
     this.setState({input: event.target.value})
@@ -136,13 +136,13 @@ displayFaceBox = (box) => {
       })
         .then(response => response.json())
         .then(count => {
-          this.setState(Object.assign(this.state.user,{entries: count})) 
+          this.setState(Object.assign(this.state.user.id,{entries: count})) 
         })            
     }
   }) 
-  .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
-    .catch(err => console.log(err))
-    .catch((error) => console.log("error", error))
+  // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
+  //   .catch(err => console.log(err))
+  //   .catch((error) => console.log("error", error))
 }
         
   
