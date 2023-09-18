@@ -67,30 +67,30 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('http://localhost:3000/imageurl',{
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-          input: this.state.input    
-      })
-    })  
-    .then(response => response.json())
-    .then(response => {
-      if (response) {
-        fetch('http://localhost:3000/image',{
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-              id: this.state.user.id    
+      fetch('http://localhost:3000/imageurl',{
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            input: this.state.input    
         })
-      })
-        .then(response => response.json())
-        .then(count => {
-          this.setState(Object.assign(this.state.user.id,{entries: count})) 
+      })  
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image',{
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: this.state.user.id    
+          })
         })
-        .catch(console.log)            
-    }
-  }) 
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user.id,{entries: count})) 
+          })
+          .catch(console.log)            
+      }
+    }) 
   // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
   //   .catch(err => console.log(err))
   //   .catch((error) => console.log("error", error))
