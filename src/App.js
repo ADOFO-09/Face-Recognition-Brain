@@ -71,9 +71,9 @@ class App extends React.Component {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            input: this.state.input    
+            input: this.state.input,   
         })
-      })  
+      })
       .then(response => response.json())
       .then(response => {
         if (response) {
@@ -88,7 +88,7 @@ class App extends React.Component {
           .then(count => {
             this.setState(Object.assign(this.state.user.id,{entries: count})) 
           })
-          .catch(console.log)            
+          .catch(err => console.log("error", err))            
       }
     }) 
   // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
