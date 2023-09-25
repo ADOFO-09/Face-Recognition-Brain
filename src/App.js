@@ -95,7 +95,7 @@ class App extends React.Component {
   //   .catch(err => console.log(err))
   //   .catch((error) => console.log("error", error))
 }
-        
+
   
 
   onRouteChange = (route) => {
