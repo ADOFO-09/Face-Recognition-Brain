@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ParticlesBg from 'particles-bg'
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
@@ -13,7 +13,7 @@ import './App.css';
 
 
 
-const intialState = {
+let intialState = {
     input:'',
     imageUrl: '',
     box: {},
@@ -27,21 +27,21 @@ const intialState = {
       joined: ''
     }
 }
-class App extends React.Component {
-  constructor(){
-    super()
-    this.state = intialState;
-  }
+const App = () => {
 
-  loadUser = (data) => {
-    this.setState({user:{ 
+const [myState, setMyState] = useState(intialState)
+
+ const myUser = (data) => {
+    setMyState({...myState, user:{ 
       id: data.id,
       name: data.name,
       email: data.email,
       entries: data.entries,
       joined: data.joined
-  }});
+  }})
+  console.log(myState.user)
 }
+
 
 // calculateFaceLocation = (data) => {
 //   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -61,79 +61,79 @@ class App extends React.Component {
 //   this.setState({box: box})
 // }
 
-  onInputChange = (event) => {
-    this.setState({input: event.target.value})
+ const onInputChange = (event) => {
+    setMyState({...myState, input: event.target.value})
   }
 
-  onButtonSubmit = () => {
-    this.setState({imageUrl: this.state.input});
-      fetch('http://localhost:3000/imageurl',{
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            input: this.state.input,   
-        })
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3000/image',{
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                id: this.state.user.id    
-          })
-        })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user.id,{entries: count})) 
-          })
-          .catch(err => console.log("error", err))            
-      }
-    }) 
-  // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
-  //   .catch(err => console.log(err))
-  //   .catch((error) => console.log("error", error))
+ const onButtonSubmit = () => {
+    setMyState({...myState, imageUrl: myState.input})
+    console.log(myState.imageUrl)
+  //     fetch('http://localhost:3000/imageurl',{
+  //       method: 'post',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({
+  //           input: this.state.input,   
+  //       })
+  //     })
+  //     .then(response => response.json())
+  //     .then(response => {
+  //       if (response) {
+  //         fetch('http://localhost:3000/image',{
+  //           method: 'put',
+  //           headers: {'Content-Type': 'application/json'},
+  //           body: JSON.stringify({
+  //               id: this.state.user.id    
+  //         })
+  //       })
+  //         .then(response => response.json())
+  //         .then(count => {
+  //           this.setState(Object.assign(this.state.user.id,{entries: count})) 
+  //         })
+  //         .catch(err => console.log("error", err))            
+  //     }
+  //   }) 
+  // // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
+  // //   .catch(err => console.log(err))
+  // //   .catch((error) => console.log("error", error))
 }
 
   
 
-  onRouteChange = (route) => {
+  const onRouteChange = (route) => {
     if(route === 'signout'){
-      this.setState(intialState);
+      setMyState({...intialState});
     } else if(route === 'home'){
-      this.setState({isSignedIn: true});
+      setMyState({...myState, isSignedIn: true});
     }
-    this.setState({route: route});
+     setMyState({...myState, route: route});
   }
 
-render() {
-  const {isSignedIn, imageUrl, route} = this.state;
+
   return (
       <div className="App">
           <ParticlesBg
             num={30} type="cobweb" bg={true} />
-          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-          { this.state.route === 'home'
+          <Navigation isSignedIn={myState.isSignedIn} onRouteChange={onRouteChange} />
+          { myState.route === 'home'
             ?<div>
               <Logo />
-              <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+              <Rank name={myState.user.name} entries={myState.user.entries}/>
               <ImageLinkForm  
-              onInputChange = {this.onInputChange} 
-              onButtonSubmit = {this.onButtonSubmit}
+              onInputChange = {onInputChange} 
+              onButtonSubmit = {onButtonSubmit}
               />
-              <FaceRecognition box={this.state.box} imageUrl={imageUrl}/>
+              <FaceRecognition box={myState.box} imageUrl={myState.imageUrl}/>
             </div>
             :(
-              route === 'signin'
-              ?<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-              :<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> 
+              myState.route === 'signin'
+              ?<Signin loadUser={myUser} onRouteChange={onRouteChange} />
+              :<Register loadUser={myUser} onRouteChange={onRouteChange}/> 
             )
             
           }  
         </div>
     )
 };
-  }
+  
 
 export default App;
