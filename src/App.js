@@ -65,32 +65,32 @@ const [myState, setMyState] = useState({
 
  const onButtonSubmit = () => {
   setImagePath(imgUrl)
-
-      fetch('http://localhost:3000/imageurl',{
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            input: imgUrl,   
-        })
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3000/image',{
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                id: user.id    
-          })
-        })
-          .then(response => response.json())
-          .then(count => {
-            setUser({...user, entries: count.entries}) 
-            
-          })
-          .catch(err => console.log("error", err))            
-      }
-    }) 
+  fetch('http://localhost:3000/image',{
+    method: 'put',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+        id: user.id    
+  })
+})
+  .then(response => response.json())
+  .then(count => {
+    setUser({...user, entries: count.entries}) 
+    
+  })
+  .catch(err => console.log("error", err))     
+      // fetch('http://localhost:3000/imageurl',{
+      //   method: 'post',
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: JSON.stringify({
+      //       input: imgUrl,   
+      //   })
+      // })
+      // .then(response => response.json())
+    //   .then(response => {
+    //     if (response) {
+                 
+    //   }
+    // }) 
   // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
   //   .catch(err => console.log(err))
   //   .catch((error) => console.log("error", error))
