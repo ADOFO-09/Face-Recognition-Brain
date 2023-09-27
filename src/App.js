@@ -13,33 +13,31 @@ import './App.css';
 
 
 
-let intialState = {
-    input:'',
-    imageUrl: '',
-    box: {},
-    route: 'signin',
-    isSignedIn: false,
-    user: {
-      id: '',
-      name: '',
-      email: '',
-      entries: 0,
-      joined: ''
-    }
-}
-const App = () => {
 
-const [myState, setMyState] = useState(intialState)
+const App = () => {
+  const [imgUrl, setImgUrl] = useState('')
+  const [imagePath, setImagePath] = useState('')
+  const [user, setUser] = useState({
+    id: '',
+    name: '',
+    email: '',
+    entries: '',
+    joined: ''
+  })
+
+const [myState, setMyState] = useState({
+  route: 'signin',
+  isSignedIn: false,
+})
 
  const myUser = (data) => {
-    setMyState({...myState, user:{ 
+    setUser({ 
       id: data.id,
       name: data.name,
       email: data.email,
       entries: data.entries,
       joined: data.joined
-  }})
-  console.log(myState.user)
+  })
 }
 
 
@@ -62,46 +60,47 @@ const [myState, setMyState] = useState(intialState)
 // }
 
  const onInputChange = (event) => {
-    setMyState({...myState, input: event.target.value})
+    setImgUrl(event.target.value)
   }
 
  const onButtonSubmit = () => {
-    setMyState({...myState, imageUrl: myState.input})
-    console.log(myState.imageUrl)
-  //     fetch('http://localhost:3000/imageurl',{
-  //       method: 'post',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({
-  //           input: this.state.input,   
-  //       })
-  //     })
-  //     .then(response => response.json())
-  //     .then(response => {
-  //       if (response) {
-  //         fetch('http://localhost:3000/image',{
-  //           method: 'put',
-  //           headers: {'Content-Type': 'application/json'},
-  //           body: JSON.stringify({
-  //               id: this.state.user.id    
-  //         })
-  //       })
-  //         .then(response => response.json())
-  //         .then(count => {
-  //           this.setState(Object.assign(this.state.user.id,{entries: count})) 
-  //         })
-  //         .catch(err => console.log("error", err))            
-  //     }
-  //   }) 
-  // // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
-  // //   .catch(err => console.log(err))
-  // //   .catch((error) => console.log("error", error))
+  setImagePath(imgUrl)
+
+      fetch('http://localhost:3000/imageurl',{
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            input: imgUrl,   
+        })
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image',{
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: user.id    
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            setUser({...user, entries: count.entries}) 
+            
+          })
+          .catch(err => console.log("error", err))            
+      }
+    }) 
+  // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
+  //   .catch(err => console.log(err))
+  //   .catch((error) => console.log("error", error))
 }
 
   
 
   const onRouteChange = (route) => {
     if(route === 'signout'){
-      setMyState({...intialState});
+      setMyState({myState});
     } else if(route === 'home'){
       setMyState({...myState, isSignedIn: true});
     }
@@ -117,12 +116,12 @@ const [myState, setMyState] = useState(intialState)
           { myState.route === 'home'
             ?<div>
               <Logo />
-              <Rank name={myState.user.name} entries={myState.user.entries}/>
+              <Rank name={user.name} entries={user.entries}/>
               <ImageLinkForm  
               onInputChange = {onInputChange} 
               onButtonSubmit = {onButtonSubmit}
               />
-              <FaceRecognition box={myState.box} imageUrl={myState.imageUrl}/>
+              <FaceRecognition box={myState.box} imageUrl={imagePath}/>
             </div>
             :(
               myState.route === 'signin'
