@@ -7,7 +7,6 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
-import axios from 'axios';
 import './App.css';
 
 
@@ -41,24 +40,6 @@ const [myState, setMyState] = useState({
 }
 
 
-// calculateFaceLocation = (data) => {
-//   const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-//   const image = document.getElementById('inputimage');
-//   const width = Number(image.width);
-//   const height = Number(image.height);
-//   return {
-//     leftCol: clarifaiFace.leftCol * width,
-//     topRow: clarifaiFace.topRow * height,
-//     rightCol: width - (clarifaiFace.rightCol * width),
-//     bottomRow: height - (clarifaiFace.bottomRow * height)
-//   }
-// }
-
-// displayFaceBox = (box) => {
-//   console.log(box)
-//   this.setState({box: box})
-// }
-
  const onInputChange = (event) => {
     setImgUrl(event.target.value)
   }
@@ -70,30 +51,8 @@ const [myState, setMyState] = useState({
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
         id: user.id    
+    })
   })
-})
-  .then(response => response.json())
-  .then(count => {
-    setUser({...user, entries: count.entries}) 
-    
-  })
-  .catch(err => console.log("error", err))     
-      // fetch('http://localhost:3000/imageurl',{
-      //   method: 'post',
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: JSON.stringify({
-      //       input: imgUrl,   
-      //   })
-      // })
-      // .then(response => response.json())
-    //   .then(response => {
-    //     if (response) {
-                 
-    //   }
-    // }) 
-  // .then(response => this.displayFaceBox() (this.calculateFaceLocation(response)))
-  //   .catch(err => console.log(err))
-  //   .catch((error) => console.log("error", error))
 }
 
   
