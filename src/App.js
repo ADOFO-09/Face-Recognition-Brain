@@ -40,6 +40,8 @@ const [myState, setMyState] = useState({
 }
 
 
+
+
  const onInputChange = (event) => {
     setImgUrl(event.target.value)
   }
@@ -51,8 +53,13 @@ const [myState, setMyState] = useState({
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
         id: user.id    
-    })
   })
+})
+  .then(response => response.json())
+  .then(count => {
+    setUser({...user, entries: count.entries}) 
+  })
+  
 }
 
   
